@@ -16,20 +16,20 @@ import {
   NEW_TODO,
 } from "../constants";
 
-const getLocalStorageSettings = () => {
-  const prefersDarkMode = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
-  console.log("Prefers dark mode:", prefersDarkMode);
+const isBrowser = typeof window !== "undefined";
 
-  const settings = localStorage.getItem(LocalStorageEnum.SETTINGS);
+const getLocalStorageSettings = () => {
+  const prefersDarkMode =
+    isBrowser && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const settings = isBrowser && localStorage.getItem(LocalStorageEnum.SETTINGS);
   return settings
     ? JSON.parse(settings)
     : { ...DEFAULT_SETTINGS, theme: prefersDarkMode ? "dark" : "light" };
 };
 
 const getLocalStorageGroups = () => {
-  const groups = localStorage.getItem(LocalStorageEnum.GROUPS);
+  const groups = isBrowser && localStorage.getItem(LocalStorageEnum.GROUPS);
   return groups ? JSON.parse(groups) : MOCK_TODO;
 };
 
