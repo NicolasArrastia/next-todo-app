@@ -104,7 +104,9 @@ const Group = ({
         <SVGIcon
           src={icons.ExpandMoreIcon.src}
           size={"25px"}
-          className="bg-neutral-900 dark:bg-neutral-100"
+          className={`bg-neutral-900 dark:bg-neutral-100 transition duration-150 ${
+            isOpen ? "rotate-0" : "-rotate-180"
+          }`}
         />
         <span className="text-sm mx-1">
           {categoryCompletedAmount}/{categoryTotal}
@@ -113,7 +115,14 @@ const Group = ({
 
         <div className="hidden group-hover:flex gap-2 px-4 absolute top-0 -translate-y-1/2 right-0 all-child:shadow-lg">
           {actions.map(({ src, classes, onClick }) => (
-            <div key={src} onClick={onClick} className={classes}>
+            <div
+              key={src}
+              onClick={(event) => {
+                event.stopPropagation();
+                onClick();
+              }}
+              className={classes}
+            >
               <SVGIcon
                 src={src}
                 size={"20px"}
