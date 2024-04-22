@@ -33,7 +33,7 @@ const Button = ({
 
   return (
     <button
-      className={`${buttonClasses[type]} px-4 py-1 rounded-md dark:text-neutral-100`}
+      className={`${buttonClasses[type]} px-2 py-1 rounded-md dark:text-neutral-100`}
       onClick={onClick}
     >
       {children}

@@ -15,6 +15,7 @@ import {
   ThemeEnum,
   useGlobalContext,
 } from "@/app/contexts/useGlobalContext";
+import Button from "../Button";
 
 type SettingsProps = {
   isOpen: boolean;
@@ -32,59 +33,46 @@ const Settings = ({ isOpen }: SettingsProps) => {
   const bgColor = CustomColors[color as ColorsEnum].base;
 
   const handleResetSettings = () => {
-    localStorage.setItem(
-      LocalStorageEnum.SETTINGS,
-      JSON.stringify(DEFAULT_SETTINGS)
-    );
     setSettings(DEFAULT_SETTINGS);
   };
 
   const handleResetTodo = () => {
-    localStorage.setItem(LocalStorageEnum.GROUPS, JSON.stringify(MOCK_TODO));
     setGroups(MOCK_TODO);
   };
 
   return (
     <div
-      className={`w-full grid gap-2 rounded-md overflow-hidden bg-neutral-200 dark:bg-neutral-900 col-span-3 ${
+      className={`w-full grid gap-2 rounded-md overflow-auto bg-neutral-200 dark:bg-neutral-900 col-span-3 ${
         isOpen ? OPEN_CLASSES : CLOSED_CLASSES
       }`}
     >
-      <div>
-        <h2 className="font-semibold">Change Color</h2>
-        <div className="flex gap-2">
-          {COLOR_OPTIONS.map((c: ColorsEnum) => {
-            const baseColor = CustomColors[c].base;
-            const isCurrentColorClasses = color === c && "border-slate-400";
-            const handleChangeColor = () => {
-              setSettings((prev) => ({ ...prev, color: c }));
-            };
-            return (
-              <div
-                onClick={handleChangeColor}
-                key={c}
-                className={`${baseColor} cursor-pointer w-10 aspect-[4/3] border-4 ${isCurrentColorClasses} shadow-md rounded-md`}
-              />
-            );
-          })}
-        </div>
+      <h2 className="font-semibold">Change Color</h2>
+      <div className="flex gap-2 flex-nowrap overflow-x-auto">
+        {COLOR_OPTIONS.map((c: ColorsEnum) => {
+          const baseColor = CustomColors[c].base;
+          const isCurrentColorClasses = color === c && "border-slate-400";
+
+          const handleChangeColor = () => {
+            setSettings((prev) => ({ ...prev, color: c }));
+          };
+
+          return (
+            <div
+              onClick={handleChangeColor}
+              key={c}
+              className={`${baseColor} cursor-pointer w-10 aspect-[4/3] border-4 ${isCurrentColorClasses} shadow-md rounded-md`}
+            />
+          );
+        })}
       </div>
-      <div>
-        <h2 className="font-semibold">Reset Values</h2>
-        <div className="flex justify-between">
-          <button
-            onClick={handleResetSettings}
-            className={`${bgColor} px-2 py-1 rounded-md font-semibold`}
-          >
-            Reset Settings
-          </button>
-          <button
-            onClick={handleResetTodo}
-            className={`${bgColor} px-2 py-1 rounded-md font-semibold`}
-          >
-            Reset Todo
-          </button>
-        </div>
+      <h2 className="font-semibold">Dev Tools</h2>
+      <div className="flex justify-between">
+        <Button type="primary" onClick={handleResetSettings}>
+          Reset Settings
+        </Button>
+        <Button type="primary" onClick={handleResetTodo}>
+          Reset Todo
+        </Button>
       </div>
     </div>
   );
