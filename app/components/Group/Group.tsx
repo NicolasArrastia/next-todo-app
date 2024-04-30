@@ -15,6 +15,7 @@ import Modal from "../Modal";
 import UpdateGroup from "../Modals/UpdateGroup";
 import { useModalContext } from "@/app/contexts/useModalContext";
 import Delete from "../Modals/Delete";
+import CreateTodo from "../Modals/CreateTodo";
 
 const CLOSED_CLASSES = "h-0";
 const OPEN_CLASSES = "h-fit";
@@ -23,11 +24,11 @@ const ACTION_CLASSES = "w-fit p-2 rounded-full shadow-lg";
 const ACTION_ICONS_CLASSES = "bg-neutral-900 dark:bg-neutral-100";
 
 const Group = ({
-  category,
-  index: groupIndex,
+  group,
+  groupIndex,
 }: {
-  category: GroupType;
-  index: number;
+  group: GroupType;
+  groupIndex: number;
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const { showModal } = useModalContext();
@@ -39,14 +40,16 @@ const Group = ({
   } = useGlobalContext();
 
   const handleCreateTodo = () => {
-    createTodo(groupIndex, NEW_TODO);
+    showModal({
+      modal: <CreateTodo groupIndex={groupIndex} />,
+    });
   };
+
+  console.log({ groupIndex });
 
   const handleEditGroup = () => {
     showModal({
-      modal: (
-        <UpdateGroup groupIndex={groupIndex} initialName={category.title} />
-      ),
+      modal: <UpdateGroup groupIndex={groupIndex} initialName={group.title} />,
     });
   };
 
@@ -88,8 +91,8 @@ const Group = ({
     },
   ];
 
-  const categoryTotal = category.todoList.length;
-  const categoryCompletedAmount = category.todoList.reduce((prev, acc) => {
+  const categoryTotal = group.todoList.length;
+  const categoryCompletedAmount = group.todoList.reduce((prev, acc) => {
     return acc.isChecked ? ++prev : prev;
   }, 0);
 
@@ -111,7 +114,7 @@ const Group = ({
         <span className="text-sm mx-1">
           {categoryCompletedAmount}/{categoryTotal}
         </span>
-        <h3 className="text-lg">{category.title} </h3>
+        <h3 className="text-lg">{group.title} </h3>
 
         <div className="hidden group-hover:flex gap-2 px-4 absolute top-0 -translate-y-1/2 right-0 all-child:shadow-lg">
           {actions.map(({ src, classes, onClick }) => (
@@ -138,9 +141,9 @@ const Group = ({
           origin-top
           ${!isOpen ? "scale-y-0 h-0" : "scale-y-100 h-fit"}`}
       >
-        {category.todoList.length ? (
+        {group.todoList.length ? (
           <>
-            {category.todoList.map((todo: TodoType, todoIndex: number) => {
+            {group.todoList.map((todo: TodoType, todoIndex: number) => {
               return (
                 <TodoComponent
                   key={`${todo.name}-${todoIndex}`}
