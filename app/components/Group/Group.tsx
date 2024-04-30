@@ -133,16 +133,17 @@ const Group = ({
         </div>
       </div>
       <div
-        className={`transition duration-150 overflow-hidden mt-2
-origin-top
-${!isOpen ? "scale-y-0 h-0" : "scale-y-100 h-fit"}`}
+        className={`
+          transition duration-150 overflow-hidden mt-2
+          origin-top
+          ${!isOpen ? "scale-y-0 h-0" : "scale-y-100 h-fit"}`}
       >
         {category.todoList.length ? (
           <>
             {category.todoList.map((todo: TodoType, todoIndex: number) => {
               return (
                 <TodoComponent
-                  key={todo.name}
+                  key={`${todo.name}-${todoIndex}`}
                   todo={todo}
                   todoIndex={todoIndex}
                   groupIndex={groupIndex}
