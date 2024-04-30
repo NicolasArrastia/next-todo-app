@@ -17,9 +17,6 @@ import { useModalContext } from "@/app/contexts/useModalContext";
 import Delete from "../Modals/Delete";
 import CreateTodo from "../Modals/CreateTodo";
 
-const CLOSED_CLASSES = "h-0";
-const OPEN_CLASSES = "h-fit";
-
 const ACTION_CLASSES = "w-fit p-2 rounded-full shadow-lg";
 const ACTION_ICONS_CLASSES = "bg-neutral-900 dark:bg-neutral-100";
 
