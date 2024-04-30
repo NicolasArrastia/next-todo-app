@@ -24,7 +24,7 @@ const NoGroups = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center pt-40">
       <span className="text-neutral-500">No Groups at the moment</span>
       <span
         onClick={handleAddNewGroup}
