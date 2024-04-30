@@ -42,7 +42,7 @@ const Content = () => {
         <>
           {groups.map((category, index) => {
             return (
-              <Group key={category.title} category={category} index={index} />
+              <Group key={category.title} group={category} groupIndex={index} />
             );
           })}
         </>
