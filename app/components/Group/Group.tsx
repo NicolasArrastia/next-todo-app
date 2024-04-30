@@ -42,8 +42,6 @@ const Group = ({
     });
   };
 
-  console.log({ groupIndex });
-
   const handleEditGroup = () => {
     showModal({
       modal: <UpdateGroup groupIndex={groupIndex} initialName={group.title} />,

@@ -33,7 +33,6 @@ export const ModalContextProvider = ({
   const showModal = ({ modal }: { modal: ModalComponentType }) => {
     setModalComponent(modal);
     setIsModalVisible(true);
-    console.log(modal, isModalVisible);
   };
 
   return (
