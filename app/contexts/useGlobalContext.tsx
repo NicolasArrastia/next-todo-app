@@ -46,7 +46,7 @@ interface ContextProps {
     todoIndex: number,
     updatedTodo: Partial<TodoType>
   ) => void;
-  createTodo: (groupIndex: number, todo: TodoType) => void;
+  createTodo: (groupIndex: number, todo: Partial<TodoType>) => void;
   deleteGroup: (groupIndex: number) => void;
   updateGroup: (groupIndex: number, updatedGroup: Partial<GroupType>) => void;
 }
@@ -121,12 +121,15 @@ export const GlobalContextProvider = ({
     setGroups(updatedGroups);
   };
 
-  const createTodo = (groupIndex: number, todo: TodoType) => {
-    const updatedGroups = [...groups];
-    updatedGroups[groupIndex].todoList = [
-      ...updatedGroups[groupIndex].todoList,
-      todo,
-    ];
+  const createTodo = (groupIndex: number, newTodo: Partial<TodoType>) => {
+    const updatedGroups: GroupType[] = groups.map((group, gIndex) =>
+      groupIndex === gIndex
+        ? {
+            ...group,
+            todoList: [...group.todoList, { ...NEW_TODO, ...newTodo }],
+          }
+        : group
+    );
 
     setGroups(updatedGroups);
   };
@@ -142,7 +145,6 @@ export const GlobalContextProvider = ({
   };
 
   useEffect(() => {
-    console.log("useEffect");
     localStorage.setItem(LocalStorageEnum.GROUPS, JSON.stringify(groups));
     localStorage.setItem(LocalStorageEnum.SETTINGS, JSON.stringify(settings));
   }, [groups, settings, setSettings, setGroups]);
