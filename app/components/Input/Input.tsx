@@ -1,12 +1,12 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 
 type Props = {
   label: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
-};
+} & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = ({ label, onChange, value }: Props) => {
+const Input = ({ label, onChange, value, ...rest }: Props) => {
   return (
     <div className="grid">
       <label
@@ -18,10 +18,10 @@ const Input = ({ label, onChange, value }: Props) => {
       <input
         onChange={onChange}
         id={label}
-        className="px-3 py-1 rounded-md border-2 text-neutral-900 dark:border-neutral-400 outline-none"
+        className="px-3 py-1 rounded-md border-2 text-neutral-900 dark:border-neutral-400 outline-none invalid:border-red-500"
         type="text"
         value={value}
-        placeholder="placeholder"
+        placeholder={rest.placeholder ?? "placeholder"}
       />
     </div>
   );
