@@ -94,11 +94,16 @@ export const GlobalContextProvider = ({
     todoIndex: number,
     updatedTodo: Partial<TodoType>
   ) => {
-    const updatedGroups = [...groups];
-    updatedGroups[groupIndex].todoList[todoIndex] = {
-      ...updatedGroups[groupIndex].todoList[todoIndex],
-      ...updatedTodo,
-    };
+    const updatedGroups: GroupType[] = groups.map((group, gIndex) =>
+      groupIndex === gIndex
+        ? {
+            ...group,
+            todoList: group.todoList.map((todo, tIndex) =>
+              todoIndex === tIndex ? { ...todo, ...updatedTodo } : todo
+            ),
+          }
+        : group
+    );
 
     setGroups(updatedGroups);
   };
@@ -137,6 +142,7 @@ export const GlobalContextProvider = ({
   };
 
   useEffect(() => {
+    console.log("useEffect");
     localStorage.setItem(LocalStorageEnum.GROUPS, JSON.stringify(groups));
     localStorage.setItem(LocalStorageEnum.SETTINGS, JSON.stringify(settings));
   }, [groups, settings, setSettings, setGroups]);
