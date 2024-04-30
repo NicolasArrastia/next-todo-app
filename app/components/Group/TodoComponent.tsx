@@ -28,7 +28,7 @@ const TodoComponent = ({
 
   const handleCheckTodo = () => {
     setIsChecked((prev) => !prev);
-    updateTodo(groupIndex, todoIndex, { isChecked: !isChecked }); // TODO: Review why !isChecked
+    updateTodo(groupIndex, todoIndex, { isChecked: !isChecked });
   };
 
   const handleDeleteTodo = () => {
